@@ -1,23 +1,22 @@
 from itertools import cycle
 import random
-
 import time
 
 
 def print_header():
     print(''.center(30, '-'))
-    print('Dice Game'.center(30, ' '))
+    print('Catan Dice Utility'.center(30, ' '))
     print(''.center(30, '-'))
 
 
 def print_goodbye():
-    print('Thank you for playing!')
+    print('Thank you for playing Catan!')
 
 
 def get_players():
     players = []
     while True:
-        number_of_players = input('How many are playing? ').strip()
+        number_of_players = input('How many are playing Catan? ').strip()
         try:
             number_of_players = int(number_of_players)
             break
@@ -26,6 +25,7 @@ def get_players():
     for i in range(1, number_of_players + 1):
         player = input("What is player {}'s name? ".format(i))
         players.append(player)
+    print(players)
     return players
 
 
@@ -41,37 +41,35 @@ class DiceGame(object):
         sided_dice = self.sided_dice
 
         for x in players:
-            input("It is {}'s turn. Press Enter to continue ".format(x))
-            print('{} is rolling...'.format(x))
+            print("It is {}'s turn.".format(x))
+            print('{} rolls:'.format(x))
             time.sleep(1)
             rolls = []
             for _ in range(number_of_dice):
                 roll = random.randint(1, sided_dice)
                 rolls.append(roll)
             roll_total = sum(rolls)
-            print('{} rolls {}.'.format(x, roll_total))
+            print('{}'.format(roll_total))
+            if roll_total == 7:
+                print('You now have to move the thief.')
+                time.sleep(5)
 
-            exit_que = input('Press Enter to continue, [Q] to quit. [R} to re-roll ')
+            cmd = input('Press Enter to continue, [Q] to quit. ')
             print()
 
-            if exit_que.lower() == 'r':
-                print('{} is rolling...'.format(x))
-                time.sleep(1)
-                rolls = []
-                for _ in range(number_of_dice):
-                    roll = random.randint(1, sided_dice)
-                    rolls.append(roll)
-                roll_total = sum(rolls)
-                print('{} rolls {}.'.format(x, roll_total))
-                print()
+#            if cmd.lower() == 'r':
+#                print('{} re-rolls and gets:'.format(x))
+#                time.sleep(1)
+#                rolls = []
+#                for _ in range(number_of_dice):
+#                    roll = random.randint(1, sided_dice)
+#                    rolls.append(roll)
+#                roll_total = sum(rolls)
+#                print('{}'.format(roll_total))
+#                print()
 
-            if exit_que.lower() == 'q':
+            if cmd.lower() == 'q':
                 break
-
-
-
-def game_loop():
-    pass
 
 
 def main():
